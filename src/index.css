@@ -1,3 +1,49 @@
 body{
   background-color: #FCFAEE;
 }
+
+
+/* styles til knapperne :) */
+
+button{
+  font-family:"Lato", sans-serif;
+  font-weight: 900;
+  font-size: calc(14px + 0.390625vw);
+  border: none;
+  border-radius: 50px;
+}
+
+.lysknap{
+  background-color: #4e722c;
+  color: #fcfaee;
+  padding: 0 5vw;
+}
+
+.morkknap{
+  background-color: #013d19;
+  color:#fcfaee;
+  padding: 0 5vw;
+}
+.rodknap{
+  background-color: #d84f52;
+  color: #fcfaee;
+  padding: 0 10vw;
+}utlineknap{
+  background-color: #fcfaee;
+  color: #4e722c;
+  border: solid 4px #4e722c;
+  padding: 0 5vw;
+}
+
+.morkoutline{
+  background-color: #fcfaee;
+  color: #013d19;
+  border: solid 4px #013d19;
+  padding: 0 5vw;
+}
+.tynd-knap{ /* til de tynde af knapperne */
+  height: 4.5vh;
+}
+.tyk-knap{ /* til de tykke af knapperne */
+  height: 6vh;
+}
