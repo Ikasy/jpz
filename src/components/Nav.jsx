@@ -1,13 +1,17 @@
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import armband from "../assets/armband.svg";
+import forside from "../assets/forside.svg";
+import profil from "../assets/profil.svg";
+import kort from "../assets/kort.svg";
 
 function Nav() {
 
     return (
       <nav>
-        <NavLink to="/"> <img src="" alt="" />Forside</NavLink>
-        <NavLink to="/kort"><img src="" alt="" />Kort</NavLink>
-        <NavLink to="/armband"><img src="" alt="" />Armbånd</NavLink>
-        <NavLink to="/profil"><img src="" alt="" />Profil</NavLink>
+        <NavLink className={({ isActive }) => isActive? "active Navbar": 'Navbar'} to="/"> <img src={forside} alt="" />Forside</NavLink>
+        <NavLink className={({ isActive }) => isActive? "active Navbar": 'Navbar'} to="/kort"><img src={kort}  alt="" />Kort</NavLink>
+        <NavLink className={({ isActive }) => isActive? "active Navbar": 'Navbar'} to="/armband"><img src={armband}  alt="" />Armbånd</NavLink>
+        <NavLink className={({ isActive }) => isActive? "active Navbar": 'Navbar'} to="/profil"><img src={profil}  alt="" />Profil</NavLink>
       </nav>
     )
   }
