@@ -60,6 +60,42 @@ h2{
 h3{
   font-family: var(--font-roboto);
 }
+/* styles til knapperne :) */
+button{
+  font-family: var(--font-lato);
+  font-weight: 900;
+  font-size: calc(16px + 0.390625vw);
+  border: none;
+  border-radius: 50px;
+  padding: 1vh 7vw;
+}
+
+.lysknap{
+  background-color: var(--colour-lightgreen);
+  color: var(--colour-white);
+}
+
+.morkknap{
+  background-color: var(--colour-green);
+  color:var(--colour-white);
+}
+.rodknap{
+  background-color: var(--colour-red);
+  color: var(--colour-white);
+} 
+.outlineknap{
+  background-color: var(--colour-white);
+  color: var(--colour-lightgreen);
+  border: solid 4px var(--colour-lightgreen);
+}
+
+.morkoutline{
+  background-color: var(--colour-white);
+  color: var(--colour-darkgreen);
+  border: solid 4px var(--colour-darkgreen);
+}
+
+
 /* ----------------------Nav----------------------------- */
 nav{
   background-color: var(--colour-green);
@@ -181,24 +217,22 @@ a.active img{
   align-items: end;
 }
 
-button{
-  padding: 1vh 7vw;
-  border-radius: 50px;
-  border: none;
-  background-color: var(--colour-green);
-  color: var(--colour-white);
-  font-family: var(--font-roboto);
-  font-size: calc(16px + 0.39065vw);
-}
-
 .tomarm{
-  height: 70vh;
+  height: 50vh;
   width: 100vw;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   align-items: center;
+  justify-content: space-around;
 
+}
+.tomarmpakke{
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  
 }
 .tomarm  img{
   width: 75%;
@@ -207,4 +241,27 @@ button{
   width: 55%;
   text-align: center;
 
+}
+
+.tilbageknap{
+  margin: 2vh 0 0 2vh;
+}
+
+/* ----------------------Armbånd----------------------------- */
+.profil{
+  text-align: center;
+}
+.profilkort{
+  width: 90vw;
+  margin: auto;
+}
+.profilkort div{
+  margin-top: 5vh;
+  display: flex;
+  flex-direction: column;
+}
+.profilkort div button {
+  width: 60%;
+  margin: 1vh auto 0 auto;
+  
 }
