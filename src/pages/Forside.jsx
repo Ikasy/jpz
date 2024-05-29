@@ -6,6 +6,8 @@ import bladealle from "../assets/Bladealle.svg";
 import skattejagt from "../assets/skattejagt.svg";
 import Lillefirkant from "../components/Lillefirkant";
 import Rektangel from "../components/Rektangel";
+import { Link } from "react-router-dom";
+import Shop from "./Shop";
 
 function Forside() {
 
@@ -40,17 +42,19 @@ function Forside() {
         w="40%"
       />
       <div className="flex">
-        <Lillefirkant 
-          tekst="ENTRÉ/"
-          tekst2="SHOP"
-          src={pose}
-          alt="Pose"
-          pos="absolute"
-          z="-1"
-          br="100%"
-          tekstfarve="#FCFAEE"
-          farve="#002a1299"
-        />
+        <Link to="/shop">
+          <Lillefirkant 
+            tekst="ENTRÉ/"
+            tekst2="SHOP"
+            src={pose}
+            alt="Pose"
+            pos="absolute"
+            z="-1"
+            br="100%"
+            tekstfarve="#FCFAEE"
+            farve="#002a1299"
+          />
+        </Link>
         <Lillefirkant
           src={skattejagt}
           alt="Skattejagt"
