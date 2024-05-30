@@ -2,11 +2,14 @@ import Armbandcomp from "../components/Armbandcomp"
 import scanarm from "../assets/mobilarmband.svg";
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import mobilpay from "../assets/mobilepay.png";
 
 function Armband() {
 const navigate = useNavigate();
 const [armband, setArmband] = useState([]); 
 const [isArmband, setIsArmband]= useState(true);
+const [saldo,setSaldo]=useState("");
 
 // useEffect armbånd
 useEffect(() => {
@@ -42,6 +45,35 @@ getArm();
 },[]);
 
 
+async function AabnDialog(event) {
+  const id = event.target.value;
+  const dialog = document.getElementById("dialog");
+
+  // Efter klik på læse mere knap, prøv at hente data for specifik
+  // event i firebase. FEJL - MON VI MANGLER "events" i URL **************
+  try {
+      let useremail = localStorage.getItem("user")
+      const response = await fetch(`https://jyllandsparkzoo-b84ba-default-rtdb.europe-west1.firebasedatabase.app/bruger/${useremail}/armband.json`);
+
+      // Hvis success med firebase, opdater titel og beskrivelse variable.
+      if (response.ok) {
+          const data = await response.json();
+          console.log(data)
+      }
+      // Hvis ikke der er forbindelse til firebase, find titel og beskrivelse
+      // for event i local storage.
+  } catch {
+      const event = events.find(event => event.id === id);
+      setTitel(event.titel);
+      setBeskrivelse(event.beskrivelse);
+      // Viser dialog boks med titel og beskrivelsesinfo.
+  } finally {
+      dialog.showModal();
+  }
+
+}
+
+
   return (
     <>
       {isArmband ? (
@@ -56,10 +88,26 @@ getArm();
                     navn={armband.navn}
                     saldo={armband.saldo}
                     type={armband.type}
+                    AabnDialog={AabnDialog}
                     />
                 ))}
             </div>
             <button className="lysknap" style={{ display:"inline-block", marginTop:"5vh"}}  onClick={() => navigate("/tilfojarmband")}>Tilføj armbånd</button>
+            
+            <dialog id="dialog" className="dialog">
+                <form method="dialog">
+                    <button id="close" formNoValidate className="lukknap">X</button>
+                    <label >
+                        Hvor meget vil du sætte ind?<input type="number" name="saldo" placeholder="Indtast Saldo" onChange={e => setSaldo(e.target.value)} required />
+                    </label>
+                    <input placeholder="Kortnummer"/> 
+                    <input placeholder="Udløbsdato"/> 
+                    <input placeholder="CVV"/> 
+                    <button>Betal</button>
+                    <p><em>Eller betal med</em></p>
+                    <img src={mobilpay} alt="Årskort"/>
+                </form>
+            </dialog>
           </div>
         ) : (
           <div className="tomarmpakke">

@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import blyant from "../assets/blyant.svg";
+import Swal from "sweetalert2";
+import mobilpay from "../assets/mobilepay.png";
+
 
 function Armbandcomp(props) {
 
   const [color,setColor]=useState("");
   const [type,setType]=useState("");
+  const [saldo,setSaldo]=useState("");
   
   // farve
   useEffect(() => {
@@ -47,7 +51,7 @@ function Armbandcomp(props) {
         </div>
         <div className="slicediv">
             <p className="slice" style={{ color: `${color}`}}>{type}</p>
-            <button>Tank Op</button>
+            <button onClick={props.AabnDialog} >Tank Op</button>
         </div>
       </div>
     )
