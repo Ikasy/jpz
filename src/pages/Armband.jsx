@@ -73,6 +73,22 @@ async function AabnDialog(event) {
 
 }
 
+async function gemSaldo() {
+        const formData = {
+            saldo: saldo
+        }
+  try {
+      const response = await fetch(`https://jyllandsparkzoo-b84ba-default-rtdb.europe-west1.firebasedatabase.app/bruger/${useremail}/armband/saldo.json`, {
+          method: "PUT", // betyder opdater
+          body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+      console.log(data);
+  } catch {
+    console.log("error")
+  }
+}
+
 
   return (
     <>
@@ -95,7 +111,7 @@ async function AabnDialog(event) {
             <button className="lysknap" style={{ display:"inline-block", marginTop:"5vh"}}  onClick={() => navigate("/tilfojarmband")}>Tilføj armbånd</button>
             
             <dialog id="dialog" className="dialog">
-                <form method="dialog">
+                <form method="dialog" onSubmit={gemSaldo} >
                     <button id="close" formNoValidate className="lukknap">X</button>
                     <label >
                         Hvor meget vil du sætte ind?<input type="number" name="saldo" placeholder="Indtast Saldo" onChange={e => setSaldo(e.target.value)} required />
@@ -103,7 +119,7 @@ async function AabnDialog(event) {
                     <input placeholder="Kortnummer"/> 
                     <input placeholder="Udløbsdato"/> 
                     <input placeholder="CVV"/> 
-                    <button>Betal</button>
+                    <button type="submit" >Betal</button>
                     <p><em>Eller betal med</em></p>
                     <img src={mobilpay} alt="Årskort"/>
                 </form>
