@@ -5,88 +5,90 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import mobilpay from "../assets/mobilepay.png";
 
-function Armband() {
+export default function Armband() {
 const navigate = useNavigate();
 const [armband, setArmband] = useState([]); 
 const [isArmband, setIsArmband]= useState(true);
 const [saldo,setSaldo]=useState("");
+const [user,setUser] = useState("");
+const [armbaandId, setArmbaandid] = useState("");
+
+async function getArm(){
+  // hent info fra Firebase Realtime Database
+    let useremail = localStorage.getItem("user")
+    setUser(useremail);
+    const urlArm =`https://jyllandsparkzoo-b84ba-default-rtdb.europe-west1.firebasedatabase.app/bruger/${useremail}/armband.json`;
+
+    // vent indtil response modtager positivt svar fra firebase
+    const responseArm = await fetch(urlArm);
+    // læs json data (listen af møder) over i variablen "data"
+    const dataArm = await responseArm.json();
+    // console.log(data);
+    /* tjek om der faktisk er møder på listen (positiv hvis
+        forskellig fra null) */
+    if (dataArm !==null){
+      // Konverter data til et array a møder
+        const armArray = Object.keys(dataArm).map((key)=>
+        ({
+            id: key,
+            ...dataArm[key],
+        }));
+        setArmband(armArray)
+        console.log(armArray);
+        localStorage.setItem("armband", JSON.stringify(armArray));
+    } else {
+      // hvis der ikke er nogen møder, set isPosts til falsk
+        setIsArmband(false);
+    }
+}
 
 // useEffect armbånd
 useEffect(() => {
-  async function getArm(){
-    // hent info fra Firebase Realtime Database
-      let useremail = localStorage.getItem("user")
-      const urlArm =`https://jyllandsparkzoo-b84ba-default-rtdb.europe-west1.firebasedatabase.app/bruger/${useremail}/armband.json`;
+  getArm();
+},[])
 
-      // vent indtil response modtager positivt svar fra firebase
-      const responseArm = await fetch(urlArm);
-      // læs json data (listen af møder) over i variablen "data"
-      const dataArm = await responseArm.json();
-      // console.log(data);
-      /* tjek om der faktisk er møder på listen (positiv hvis
-          forskellig fra null) */
-      if (dataArm !==null){
-        // Konverter data til et array a møder
-          const armArray = Object.keys(dataArm).map((key)=>
-          ({
-              id: key,
-              ...dataArm[key],
-          }));
-          setArmband(armArray)
-          console.log(armArray);
-          localStorage.setItem("armband", JSON.stringify(armArray));
-      } else {
-        // hvis der ikke er nogen møder, set isPosts til falsk
-          setIsArmband(false);
-      }
-  }
-getArm();
+useEffect(() => {
+  const lukKnap = document.getElementById("lukKnap");
+  lukKnap.addEventListener("click" ,lukDialog);
 
-},[]);
+  return () => {
+    lukKnap.removeEventListener('click', lukDialog);
+  };
+},[])
 
-
-async function AabnDialog(event) {
-  const id = event.target.value;
+function lukDialog() {
   const dialog = document.getElementById("dialog");
+  dialog.close();
+}
 
-  // Efter klik på læse mere knap, prøv at hente data for specifik
-  // event i firebase. FEJL - MON VI MANGLER "events" i URL **************
-  try {
-      let useremail = localStorage.getItem("user")
-      const response = await fetch(`https://jyllandsparkzoo-b84ba-default-rtdb.europe-west1.firebasedatabase.app/bruger/${useremail}/armband.json`);
+function AabnDialog(event) {
+  const id = event.target.value; // Id på det valgte armbånd
+  const aktuelleSaldo = event.target.dataset.saldo; // Saldo på det valgte armbånd
+  setSaldo(aktuelleSaldo);
 
-      // Hvis success med firebase, opdater titel og beskrivelse variable.
-      if (response.ok) {
-          const data = await response.json();
-          console.log(data)
-      }
-      // Hvis ikke der er forbindelse til firebase, find titel og beskrivelse
-      // for event i local storage.
-  } catch {
-      const event = events.find(event => event.id === id);
-      setTitel(event.titel);
-      setBeskrivelse(event.beskrivelse);
-      // Viser dialog boks med titel og beskrivelsesinfo.
-  } finally {
-      dialog.showModal();
-  }
-
+  setArmbaandid(id);
+  const dialog = document.getElementById("dialog");
+  dialog.showModal();
 }
 
 async function gemSaldo() {
-        const formData = {
-            saldo: saldo
-        }
+
+  const formData = {
+    saldo: saldo
+  }
+
   try {
-      const response = await fetch(`https://jyllandsparkzoo-b84ba-default-rtdb.europe-west1.firebasedatabase.app/bruger/${useremail}/armband/saldo.json`, {
-          method: "PUT", // betyder opdater
+      const response = await fetch(`https://jyllandsparkzoo-b84ba-default-rtdb.europe-west1.firebasedatabase.app/bruger/${user}/armband/${armbaandId}.json`, {
+          method: "PATCH", // betyder opdater en enkelt attribut (her saldo) og ikke alle attributter (som "PUT" gør)
           body: JSON.stringify(formData)
       });
       const data = await response.json();
       console.log(data);
+      getArm();
   } catch {
     console.log("error")
   }
+
 }
 
 
@@ -100,6 +102,7 @@ async function gemSaldo() {
                 {armband.map(armband => (
                     <Armbandcomp 
                     key={armband.id}
+                    armbaandid={armband.id}
                     farve={armband.farve}
                     navn={armband.navn}
                     saldo={armband.saldo}
@@ -112,9 +115,9 @@ async function gemSaldo() {
             
             <dialog id="dialog" className="dialog">
                 <form method="dialog" onSubmit={gemSaldo} >
-                    <button id="close" formNoValidate className="lukknap">X</button>
+                    <button type="button" id="lukKnap" className="lukknap">X</button>
                     <label >
-                        Hvor meget vil du sætte ind?<input type="number" name="saldo" placeholder="Indtast Saldo" onChange={e => setSaldo(e.target.value)} required />
+                        Hvor meget vil du sætte ind?<input type="number" name="saldo" value={saldo || 0} placeholder="Indtast Saldo" onChange={e => setSaldo(e.target.value)} required />
                     </label>
                     <input placeholder="Kortnummer"/> 
                     <input placeholder="Udløbsdato"/> 
@@ -142,16 +145,3 @@ async function gemSaldo() {
   )
 }
 
-export default Armband
-{/* <Armbandcomp
-navn="Birgitte"
-saldo="0 kr"
-type="Primære"
-farve="#d84f54bf"
-/>
-<Armbandcomp
-navn="lise"
-saldo="0 kr"
-type="Sekundær"
-farve="#4f94c6bf"
-/> */}

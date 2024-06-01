@@ -1,147 +1,131 @@
+import { useNavigate } from "react-router-dom";
+import grillmenu from "../assets/grillmenu.png"
+import Swal from "sweetalert2";
 
-// function Grill() {
-
-//   return (
-//     <>
-//     </>
-//   )
-// }
-
-// export default Grill
-// App.js
-import React, { useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
-import aarskort from '../assets/aarskort.svg';
-
-const App = () => {
-  const [basketItems, setBasketItems] = useState([]);
-
-  function addToBasket(item) {
-      // Generate a unique key for the item
-      const uniqueKey = `basket_item_${new Date().getTime()}`;
-
-      // Convert the item to a JSON string and save it in session storage
-      sessionStorage.setItem(uniqueKey, JSON.stringify(item));
-      console.log(`Item added to basket: ${JSON.stringify(item)}`);
-
-  }
-
-  function getBasketItems() {
-    const items = [];
-    console.log("Fetching basket items from session storage...");
-
-    // Iterate through session storage keys
-    for (let i = 0; i < sessionStorage.length; i++) {
-        const key = sessionStorage.key(i);
-
-        // Check if the key matches the basket item pattern
-        if (key.startsWith('basket_item_')) {
-            const itemString = sessionStorage.getItem(key);
-
-            // Convert the JSON string back to an object and add it to the items array
-            items.push(JSON.parse(itemString));
-        }
-    }
-    console.log(`Basket items fetched: ${JSON.stringify(items)}`);
-    return items;
-}
-    
+function Grill() {
+  let navigate = useNavigate();
   
-  // Function to retrieve all items from the basket
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const user = localStorage.getItem("user");
   
-
-  async function showSweetAlert() {
-    try {
-      const { value: formValues } = await Swal.fire({
-        title: 'Årskort',
-        html:
-          `<div style="text-align: left;">
-            <h3><strong>Priser:</strong></h3>
-            <p><strong>Barn, 0-1 år:</strong> Gratis</p>
-            <p><strong>Barn, 2-11 år:</strong> 250 DKK</p>
-            <p><strong>Voksen:</strong> 385 DKK</p>
-            <p><strong>Senior, +65 år:</strong> 365 DKK</p>
-          </div>
-          
-          <input id="swal-input1" class="swal2-input" placeholder="Navn"> 
-          <select id="swal-input2" class="swal2-input">
-            <option value="barn">Barn</option>
-            <option value="voksen">Voksen</option>
-            <option value="senior">Senior</option>
-          </select>
-          <div style="margin-top: 20px; text-align: center;">
-            <img src=${aarskort} alt="Årskort">
-          </div>
-          `,
-        focusConfirm: false, 
-        showCancelButton: true,
-        confirmButtonText: 'Læg i kurv',
-        cancelButtonText: 'Annuller',
-        reverseButtons: true,
-        buttonsStyling: false,
-        background: '#FCFAEE',
-        customClass: {
-          cancelButton: 'outlineknap' // Tilføj din klasse her
-        },
-        
-        preConfirm: () => {
-          const navn = document.getElementById('swal-input1').value;
-          const alder = document.getElementById('swal-input2').value;
-          return { navn: navn, alder: alder };
-        }
-      });
+    if (user !== null) {
   
-      if (formValues) {
-        const { navn, alder } = formValues; // Destructuring to get navn and alder from formValues
-        const user = {
-          navn: navn,
-          alder: alder,
-          email: "john.doe@example.com"
-        };
-        addToBasket(user);
-      
+      const baseUrl = `https://jyllandsparkzoo-b84ba-default-rtdb.europe-west1.firebasedatabase.app/bruger/${user}`;
+  
+      // Get user data from Firebase
+      const response = await fetch(baseUrl + ".json");
+      const data = await response.json();
+      console.log(data);
+  
+      const form = event.target;
+      const sted = form.sted.value;
+      const tid = form.tid.value;
+      const navn = data.fornavn + " " + data.efternavn;
+  
+      // datoen er en pladsholder dato, og kunne være hvilken som helst, eller den dag det skulle bookes på
+      const selectedTime = new Date(`2000-01-01T${tid}`);
+      // tilføjer de 30 minutter til den valgte tid
+      selectedTime.setMinutes(selectedTime.getMinutes() + 30);
+      // skærer datoen væk fra den valgte tid så der kun er tidspunktet tilbage
+      const thirtyminslater = selectedTime.toTimeString().slice(0, 5);
+  
+      const booking = {
+        lokation: sted,
+        tidspunkt: tid,
+        udlob: thirtyminslater,
+        navn: navn
+      };
+      console.log(booking);
+      console.log(`Updating booking with items:`, booking); // Log the items being sent
+  
+      try {
+        const response = await fetch(`${baseUrl}/bookinger.json`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(booking)
+        });
+        const data = await response.json();
+        console.log(`Updated booking:`, data);
+  
+        // Swal confirmation on successful booking
         Swal.fire({
-          title: " Lagt i kurv!",
-          text: "Din vare er nu lagt i kurven",
+          title: "Succes!",
+          text: "Din booking er gennemført",
           icon: "success",
-          color:"#013D19",
+          color: "#013D19",
           background: "#FCFAEE",
-          allowOutsideClick: false,
-          confirmButtonText: "Forsæt",
+          confirmButtonText: "Fortsæt",
           buttonsStyling: false,
           iconColor: "#013D19"
-        })
-        const updatedItems = getBasketItems();
-        console.log(`Updated basket items: ${JSON.stringify(updatedItems)}`);
-        setBasketItems(updatedItems);
-
-        // setBasketItems(getBasketItems());
-        // console.log(basketItems);
-
+        });
+  
+      } catch (error) {
+        console.error(`Error updating booking:`, error);
       }
-    } catch (error) {
-      Swal.fire('Fejl!', 'Der opstod en fejl ved gemning af data.', 'error');
-      console.log(error);
+  
+    } else {
+      Swal.fire({
+        title: "Login mangler",
+        text: "Du skal oprette bruger eller logge ind for at booke",
+        icon: "error",
+        color:"#d84f52",
+        background: "#FCFAEE",
+        allowOutsideClick: false,
+        confirmButtonText: "Opret bruger",
+        buttonsStyling: false,
+        iconColor: "#d84f52"
+      }).then(() => {
+        navigate("/start");
+      });
     }
   }
   
-useEffect(() => {
-  const items = getBasketItems();
-  console.log(`Basket items on component mount: ${JSON.stringify(items)}`);
-  setBasketItems(items);
-}, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+  
+  
 
   return (
-    <div>
-      <button onClick={showSweetAlert}>Vis Modal</button>
-      <ul>
-        {basketItems.map((item, index) => (
-          <li key={index}>{item.navn} - {item.alder}</li>
-        ))}
-      </ul>
-    </div>
+    <>
+    <p className="tilbageknap" onClick={() => navigate(-1)}>Tilbage</p>
+      <h1 style={{textAlign: "center"}}>Grill-selv menu</h1>
+      <p>I Jyllands Park Zoo er I velkomne til selv at medbringe mad og drikkevarer. Der mangler naturligvis heller ikke en grill. Der står en grill til fri afbenyttelse, og som kan bookes, ved legepladsen og Sø-kiosken. Grillen bookes på besøgsdagen.</p>
+      <p>Vi tilbyder naturligvis også grillbakker og ”bland selv” grillbakker, I kan grille i parken.</p>
+      <form onSubmit={handleSubmit}>
+        <input style={{height: "auto", width: "auto", display:"inline-block", marginRight:"2vw"}}type="radio" id="legeplads" name="sted" value="legeplads"/>
+        <label htmlFor="legeplads">Grill ved legepladsen</label>
+        <br />
+        <input style={{height: "auto", width: "auto", display:"inline-block", marginRight:"2vw"}} type="radio" id="kiosk" name="sted" value="kiosk"/>
+        <label htmlFor="kiosk">Grill ved sø-kiosken</label>
+        
+        <input style={{ width: "auto"}} name="tid" type="time" id="tid"/>
 
-  );
-};
+        <button type="submit">Book</button>
+      </form>
+      <img style={{width: "90%", margin:"auto", display: "block"}} src={grillmenu} alt="grill menu" />
+      <i>
+        <p>Inkl. engangsservice</p>
+        <p>Grillbakker skal bestilles dagen før, mens bestillinger til mere end 20 personer bestilles 7 dage før.</p>
+        <p>For mere information/bestilling kontakt cafeteriet på <u>97 16 61 88</u></p>
+      </i>
+    </>
+  )
+}
 
-export default App;
+export default Grill

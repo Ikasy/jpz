@@ -261,6 +261,7 @@ a.active img{
 .tilbageknap{
   margin: 2vh 0 0 2vh;
   text-align: left;
+  width: 50%;
 }
 
 /* ----------------------Profil----------------------------- */

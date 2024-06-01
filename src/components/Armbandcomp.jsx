@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import { useEffect, useState } from "react";
 import blyant from "../assets/blyant.svg";
 import Swal from "sweetalert2";
@@ -8,7 +9,7 @@ function Armbandcomp(props) {
 
   const [color,setColor]=useState("");
   const [type,setType]=useState("");
-  const [saldo,setSaldo]=useState("");
+  // const [saldo,setSaldo]=useState("");
   
   // farve
   useEffect(() => {
@@ -28,7 +29,7 @@ function Armbandcomp(props) {
           }
       }
       switchColor();
-  },[])
+  },[props.farve])
 
   useEffect(() => {
     async function switchType (){
@@ -41,7 +42,7 @@ function Armbandcomp(props) {
         }
     }
     switchType();
-},[])
+},[props.type])
 
     return (
       <div className="armbandkort" style={{ backgroundColor: `${color}`}}>
@@ -51,7 +52,7 @@ function Armbandcomp(props) {
         </div>
         <div className="slicediv">
             <p className="slice" style={{ color: `${color}`}}>{type}</p>
-            <button onClick={props.AabnDialog} >Tank Op</button>
+            <button type="button" onClick={props.AabnDialog} value={props.armbaandid} data-saldo={props.saldo}>Tank Op</button>
         </div>
       </div>
     )

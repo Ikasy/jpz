@@ -61,14 +61,16 @@ function Forside() {
           farve="#fbd453BF"
         />
       </div>
-      <Rektangel
-        tekst="MAD OG"
-        tekst2="SPISESTEDER"
-        src={abe}
-        alt="Abe med banan"
-        farve="#4e722cBF"
-        br="50px 5px"
-      />
+      <Link to="/mad">
+        <Rektangel
+          tekst="MAD OG"
+          tekst2="SPISESTEDER"
+          src={abe}
+          alt="Abe med banan"
+          farve="#4e722cBF"
+          br="50px 5px"
+        />
+      </Link>
     </div>
   )
 }
