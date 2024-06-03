@@ -3,7 +3,7 @@ import sobjorn from "../assets/sobjorn.svg";
 import abe from "../assets/mad.svg";
 import pose from "../assets/shoppingbag.svg";
 import bladealle from "../assets/Bladealle.svg";
-import skattejagt from "../assets/skattejagt.svg";
+import skattejagt from "../assets/Skattejagt.svg";
 import Lillefirkant from "../components/Lillefirkant";
 import Rektangel from "../components/Rektangel";
 import { Link } from "react-router-dom";
@@ -12,11 +12,11 @@ import Shop from "./Shop";
 function Forside() {
 
   return (
-    <div style={{ backgroundImage: `url(${bladealle})`, backgroundRepeat:"no-repeat", backgroundSize:"cover", paddingBottom: "15vh", backgroundAttachment: "fixed"}}>
+    <div style={{ backgroundImage: `url(${bladealle})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", paddingBottom: "15vh", backgroundAttachment: "fixed" }}>
       <div className="logo">
-        <img 
-          src={logo} 
-          alt="Jyllands Park Zoo logo med løve, abe, giraf og søbjørn" 
+        <img
+          src={logo}
+          alt="Jyllands Park Zoo logo med løve, abe, giraf og søbjørn"
         />
       </div>
       <div className="flex">
@@ -26,7 +26,7 @@ function Forside() {
           tekst3="10 - 17"
           farve="#FCFAEEBF"
         />
-        <Lillefirkant  
+        <Lillefirkant
           tekst="INFO"
           tekstfarve="#FCFAEE"
           farve="#002a12BF"
@@ -43,7 +43,7 @@ function Forside() {
       />
       <div className="flex">
         <Link to="/shop">
-          <Lillefirkant 
+          <Lillefirkant
             tekst="ENTRÉ/"
             tekst2="SHOP"
             src={pose}
@@ -55,7 +55,7 @@ function Forside() {
             farve="#002a1299"
           />
         </Link>
-        <Lillefirkant
+        <Lillefirkant className="skattekiste"
           src={skattejagt}
           alt="Skattejagt"
           farve="#fbd453BF"

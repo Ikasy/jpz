@@ -6,4 +6,28 @@ body{
   background-color: #FCFAEE;
 }
 
+/* ----------------------Responsive---------------------- */
+@media only screen and (max-width: 390px) {
+  h2{
+    font-size: calc(24px + 0.39065vw);
+  }
+
+  .firk img{
+    max-width: 80%;
+  }
+
+  .rekt img{
+    max-width: 80%;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  h2{
+    font-size: calc(20px + 0.39065vw);
+  }
+
+  .rekt img{
+    max-width: 30%;
+  }
+}
 
