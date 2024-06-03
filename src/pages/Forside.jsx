@@ -32,15 +32,17 @@ function Forside() {
           farve="#002a12BF"
         />
       </div>
-      <Rektangel
-        tekst="DAGENS"
-        tekst2="PROGRAM"
-        src2={sobjorn}
-        alt2="søbjørn"
-        farve="#4e722c"
-        br="5px 50px"
-        w="40%"
-      />
+      <Link to="/program">
+        <Rektangel
+          tekst="DAGENS"
+          tekst2="PROGRAM"
+          src2={sobjorn}
+          alt2="søbjørn"
+          farve="#4e722c"
+          br="5px 50px"
+          w="40%"
+        />
+      </Link>
       <div className="flex">
         <Link to="/shop">
           <Lillefirkant
@@ -55,11 +57,13 @@ function Forside() {
             farve="#002a1299"
           />
         </Link>
-        <Lillefirkant className="skattekiste"
-          src={skattejagt}
-          alt="Skattejagt"
-          farve="#fbd453BF"
-        />
+        <Link to="/skattejagt">
+          <Lillefirkant className="skattekiste"
+            src={skattejagt}
+            alt="Skattejagt"
+            farve="#fbd453BF"
+          />
+        </Link>
       </div>
       <Link to="/mad">
         <Rektangel

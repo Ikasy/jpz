@@ -510,4 +510,83 @@ h2#swal2-title{
   max-width: 40%;
 }
 
+/* ----------------------skattejagt  ---------------------- */
+
+.skattejagt ol, .skattejagt li, .skattejagt ul{
+  font-family: var(--font-lato);
+}
+
+.skattejagt ol li{
+  width: 90%;
+  margin: auto;
+  margin-bottom: 1vh;
+}
+
+.skattejagt .kiste{
+display: flex;
+width: 100%;
+justify-content: center;
+margin-bottom: 2vh;
+height: 10vh;
+}
+
+.post1{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.post1 p{
+  width: 80%;
+}
+.post1 img{
+  height: 8vh;
+  width: auto;
+}
+
+/* ---------------------- dagens program  ---------------------- */
+
+.dagprogram{
+  width: 100%;
+  text-align: center;
+}
+
+.dagprogram h1{
+  margin: 2vh 0;
+}
+
+.dagprogram div{
+  width: 80%;
+  margin: auto;
+}
+
+.dagprogram img{ /* hvorfor sidder de til højre??????? */
+  margin-bottom: 2vh;
+  width: 100%;
+}
+
+/* kunne ikke få det til at se pænt ud med props :(
+
+.programkort{
+  background-color: var(--colour-bluegreen);
+  color: var(--colour-white);
+  height: 20vh;
+  width: 80%;
+}
+
+.programkort img{
+  height: 10vh;
+  margin: auto;
+  margin-left: 1vw;
+}
+
+.programkort .slicediv{
+  color: var(--colour-text);
+}
+
+.programkort .slice{
+  padding: 0.5vh 50vw;
+  font-size: calc(14px + 0.39065vw);
+  translate: 210px;
+} */
 

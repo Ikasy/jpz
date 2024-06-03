@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import grillmenu from "../assets/grillmenu.png"
+import grillen from "../assets/grill.svg"
 import Swal from "sweetalert2";
 
 function Grill() {
@@ -125,6 +126,7 @@ function Grill() {
         <p>Grillbakker skal bestilles dagen før, mens bestillinger til mere end 20 personer bestilles 7 dage før.</p>
         <p>For mere information/bestilling kontakt cafeteriet på <u>97 16 61 88</u></p>
       </i>
+      <img style={{ width: "50%", margin: "auto auto 2vh auto", display: "block" }} src={grillen} alt="grill" />
     </section>
   )
 }
