@@ -15,20 +15,20 @@ function Program() {
   let navigate = useNavigate();
 
   return (
-    <section className="dagprogram">
+    <>
       <p className="tilbageknap" onClick={() => navigate(-1)}>Tilbage</p>
-      <h1>Dagens Program</h1>
-
-      <div>
-        <img src={facepaint10} alt="ansigtsmaling kl 10" />
-        <img src={sobjorn11} alt="søbjørne fodring kl 11" />
-        <img src={slange1130} alt="slangeshow kl 11:30" />
-        <img src={sobjorn1430} alt="søbjørne fodring kl 14:30" />
-        <img src={facepaint15} alt="ansigtsmaling kl 15" />
-        <img src={pingvin1530} alt="Pingvin show kl 15:30" />
-      </div>
-
-    </section>
+      <section className="dagprogram">
+        <h1>Dagens Program</h1>
+        <div>
+          <img src={facepaint10} alt="ansigtsmaling kl 10" />
+          <img src={sobjorn11} alt="søbjørne fodring kl 11" />
+          <img src={slange1130} alt="slangeshow kl 11:30" />
+          <img src={sobjorn1430} alt="søbjørne fodring kl 14:30" />
+          <img src={facepaint15} alt="ansigtsmaling kl 15" />
+          <img src={pingvin1530} alt="Pingvin show kl 15:30" />
+        </div>
+      </section>
+    </>
   )
 }
 export default Program
