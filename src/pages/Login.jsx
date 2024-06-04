@@ -16,9 +16,11 @@ function Login() {
   // funktion, der kaldes ved indsendelse af formularen. 
   async function handleSubmit(e) {
     e.preventDefault(); // Forhindrer standardadfærd for formularen
+    
     try { // Log ind med email og password ved hjælp af Firebase Authentication
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log(userCredential);
+
        // Hvis login er vellykket, gem brugerens email i sessionStorage
       const user = userCredential.user;
       const emailWithUnderscore = user.email.replace('.', '_'); // Erstat punktummer med underscores

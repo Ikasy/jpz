@@ -80,7 +80,7 @@ export default function Opret() {
       if (error.message.indexOf("email-already-in-use") > -1) {
         setStatus("Du er allerede oprettet!");
       } else {
-        setStatus("Din oprettelse slog fejl, makker!");
+        setStatus("Din oprettelse slog fejl!");
       }
       console.error('Error creating user:', error.message);
     }
