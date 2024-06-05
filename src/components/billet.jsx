@@ -1,5 +1,5 @@
 import stregkode from "../assets/Stregkode.svg"
-import logo from "../assets/logo.svg"
+import logo from "../assets/Logo.svg"
 import bgb from "../assets/billet.svg"
 
 import { useEffect, useState } from "react";

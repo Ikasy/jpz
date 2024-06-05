@@ -141,13 +141,13 @@ nav {
 }
 
 a.active img {
+  background-color: var(--colour-green);
+  outline: var(--colour-green) 5px solid;
   border: 2px var(--colour-white) solid;
   border-radius: 100%;
   padding: 1vw;
   scale: 1.3;
   translate: 0 -1.5vh;
-  background-color: var(--colour-green);
-  outline: var(--colour-green) 5px solid;
 }
 
 /* ----------------------Forside----------------------------- */

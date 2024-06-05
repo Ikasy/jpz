@@ -84,6 +84,17 @@ async function gemSaldo() {
       });
       const data = await response.json();
       console.log(data);
+      Swal.fire({
+        title: "Saldo opdateret",
+        text: "Armbåndes saldo er nu opdateret",
+        icon: "success",
+        color:"#013D19",
+        background: "#FCFAEE",
+        allowOutsideClick: false,
+        confirmButtonText: "Forsæt",
+        buttonsStyling: false,
+        iconColor: "#013D19"
+      });
       getArm();
   } catch {
     console.log("error")

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase-config'; // Import your Firebase configuration
 import { useNavigate } from 'react-router-dom';
-import logo from "../assets/logo.svg"
+import logo from "../assets/Logo.svg"
 import Swal from 'sweetalert2'
 
 

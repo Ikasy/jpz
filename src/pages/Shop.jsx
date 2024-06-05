@@ -144,7 +144,6 @@ async function showBil() {
       customClass: {
         cancelButton: 'outlineknap' // Tilføj din klasse her
       },
-      
       preConfirm: () => {
         const navn = document.getElementById('swal-input1').value;
         const alder = document.getElementById('swal-input2').value;
@@ -155,17 +154,17 @@ async function showBil() {
     if (formValues) {
       const { navn, alder } = formValues;
       const currentTime = new Date().getTime();
-      const oneYearFromNow = currentTime + (365 * 24 * 60 * 60 * 1000);
+      const oneDayFromNow = currentTime + (24 * 60 * 60 * 1000);
 
       const formattedNowDate = new Date(currentTime).toLocaleDateString();
-      const formattedYearDate = new Date(oneYearFromNow).toLocaleDateString();
+      const formattedDayFromNow = new Date(oneDayFromNow).toLocaleDateString();
 
       const user = {
         navn: navn,
         alder: alder,
         kobt: formattedNowDate,
         type: "billet",
-        udlob: formattedYearDate
+        udlob: formattedDayFromNow
       };
       addToBasket(user);
     
@@ -444,7 +443,7 @@ return (
             {basketItems.length > 0 ? (
               basketItems.map((item, index) => (
                 <li key={index}>
-                  {item.item.navn} -- {item.item.alder} {item.item.type}
+                  {item.item.navn} - {item.item.alder} - {item.item.type}
                   <img
                     onClick={() => removeFromBasket(item.key)}
                     src={skrald}

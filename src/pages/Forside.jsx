@@ -3,7 +3,7 @@ import sobjorn from "../assets/sobjorn.svg";
 import abe from "../assets/mad.svg";
 import pose from "../assets/shoppingbag.svg";
 import bladealle from "../assets/Bladealle.svg";
-import skattejagt from "../assets/Skattejagt.svg";
+import skattejagt from "../assets/skattejagt.svg";
 import Lillefirkant from "../components/Lillefirkant";
 import Rektangel from "../components/Rektangel";
 import { Link } from "react-router-dom";
