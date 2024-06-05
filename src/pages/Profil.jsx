@@ -69,14 +69,13 @@ useEffect(() => {
 
       // vent indtil response modtager positivt svar fra firebase
       const responseBok = await fetch(urlBok);
-      // læs json data (listen af møder) over i variablen "data"
+      // læs json data (listen af bookinger) over i variablen "data"
       const dataBok = await responseBok.json();
 
-      // console.log(data);
-      /* tjek om der faktisk er møder på listen (positiv hvis
+      /* tjek om der faktisk er bookinger på listen (positiv hvis
           forskellig fra null) */
       if (dataBok !==null){
-        // Konverter data til et array a møder
+        // Konverter data til et array af bookinger
           const bokArray = Object.keys(dataBok).map((key)=>
           ({
               id: key,
@@ -87,7 +86,7 @@ useEffect(() => {
 
           console.log(bokArray);
       } else {
-        // hvis der ikke er nogen møder, set isPosts til falsk
+        // hvis der ikke er nogen bookinger, set isbooking til falsk
           setIsBooking(false);
       }
   }
@@ -240,7 +239,8 @@ async function handleLogout() {
                 ))}
                 </div>
               </div>
-            ) : (
+            ) : 
+            (
               <div>
                 <h2>Bookinger</h2>
                 <p>Ingen nuværende bookinger</p>
